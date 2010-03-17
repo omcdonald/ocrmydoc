@@ -11,13 +11,10 @@ main: main.cpp libtemplar.a
 	$(CC) $(FLAGS) -o $(BIN) main.cpp -ltemplar
 	chmod u+x $(BIN)
 	rm *.o
-libtemplar.a: libtemplar.o
-	ar -cvq libtemplar.a libtemplar.o
-libtemplar.o: sax.o templar.o
-	$(CC) $(FLAGS) -o libtemplar.o -c sax.o templar.o \
-					-ltesseract_full -lpthread -ltiff
+libtemplar.a: sax.o libtemplar.o
+	ar -cvq libtemplar.a libtemplar.o sax.o
 templar.o: sax.hpp templar.hpp templar.cpp
-	$(CC) $(FLAGS) -c templar.cpp 
+	$(CC) $(FLAGS)	-ltesseract_full -lpthread -ltiff -c templar.cpp 
 sax.o: sax.hpp sax.cpp
 	$(CC) $(FLAGS) -c sax.cpp
 
