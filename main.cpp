@@ -16,4 +16,5 @@ using namespace std;
 int main(int argc, char** argv)
 {
     cout << "Rubbish! " << Templar::Debug() << endl;
+	exit(EXIT_SUCCESS);
 }

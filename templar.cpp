@@ -5,8 +5,8 @@
  */
 
 #include "tesseract/baseapi.h"
+#include "sax.cpp" //temporarily cpp
 #include "templar.hpp"
-#include "sax.hpp"
 
 #ifndef NULL
 #define NULL 0L
@@ -22,9 +22,9 @@ char* Templar::Process(const char* language, const unsigned char* imagedata, int
     return text;
 }
 
-char* Templar::Debug()
+int Templar::Debug()
 {
-    return "Hello";
+    return Sax::Hello();
 }
 
 #ifdef _CUSTOM_NULL

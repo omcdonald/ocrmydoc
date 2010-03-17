@@ -7,4 +7,8 @@
 /*
  * The method that actually processes the region.
  */
-//void ErnstXmlLoader::loadXml(string xml_path);
+
+namespace Sax
+{
+	int Hello();
+}
