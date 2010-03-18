@@ -22,9 +22,9 @@ char* Templar::Process(const char* language, const unsigned char* imagedata, int
     return text;
 }
 
-int Templar::Debug()
+int Templar::Testing456()
 {
-    return Sax::Hello();
+    return Sax::Testing123() + 333;
 }
 
 #ifdef _CUSTOM_NULL

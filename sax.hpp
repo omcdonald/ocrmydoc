@@ -10,5 +10,5 @@
 
 namespace Sax
 {
-	int Hello();
+	int Testing123();
 }

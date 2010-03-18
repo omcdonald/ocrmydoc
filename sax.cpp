@@ -6,7 +6,7 @@
 
 #include "sax.hpp"
 
-int Sax::Hello()
+int Sax::Testing123()
 {
-	return 3;
+	return 123;
 }

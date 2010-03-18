@@ -1,1 +1,11 @@
-In this folder you may find the development files for the faxmydoc OCR module.
+This repository contains the devleopment files for the OCR module in the Faxmydoc project.
+
+Current state:
+    - main depends on templar which depends on sax
+    - as temporary placeholders to get the dependency system working, the following functions are implemented:
+        - in sax.cpp:     Sax::Testing123() which depends on nothing
+        - in templar.cpp: Templar::Testing456() which depends on Sax::Testing123()
+        - in main.cpp:    main() which depends on Templar456()
+
+Issues:
+    - upon compiling main(), an error is thrown claiming an undefined reference to Templar::Testing456()
