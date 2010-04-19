@@ -1,33 +1,93 @@
-  /*
- * Library file for OCR module.
- *
+/*
+ * Source for library file of OCR module.
+ * 
  * Author: Milosz Kosmider
  */
 
 #include "tesseract/baseapi.h"
-#include "sax.cpp" //temporarily cpp
+#include "tesseract/imgs.h"
+#include "tiffio.h"
+
+void read_tiff_image(TIFF* tif, IMAGE* image); //Why is this necessary?
+
+#include "sax.hpp"
 #include "templar.hpp"
 
 #ifndef NULL
 #define NULL 0L
-#define _CUSTOM_NULL
+#define NULL_DEFINED
 #endif
 
-char* Templar::Process(const char* language, const unsigned char* imagedata, int bytes_per_pixel, int bytes_per_line, int width, int height)
-{
-    TessBaseAPI::InitWithLanguage(NULL, NULL, language, NULL, false, 0, NULL);
-    char* text = TessBaseAPI::TesseractRect(imagedata, bytes_per_pixel, bytes_per_line, 0, 0, width, height);
-    TessBaseAPI::End();
-   
-    return text;
+namespace OCR {
+    namespace Engine {
+        bool initialized = false;
+        IMAGE image;
+        int bytes_per_line;
+        int bytes_per_pixel;
+        
+        int Start(const char* image_file)
+        {
+            int exit_status = 0;
+            if (!initialized)
+            {
+                TIFF* tiff = NULL;
+                tiff = TIFFOpen(image_file, "r");
+                
+                if (tiff != NULL)
+                {
+                    read_tiff_image(tiff, &image);
+                    
+                    int xsize = image.get_xsize();
+                    int ysize = image.get_ysize();
+                    int bpp = image.get_bpp();
+                    
+                    bytes_per_line = check_legal_image_size(xsize, ysize, bpp);
+                    bytes_per_pixel = bpp/8;
+                        
+                    ::TessBaseAPI::SimpleInit(NULL, "eng", false);
+                    
+                    initialized = true;
+                }
+                else
+                {
+                    exit_status = 2;
+                }
+
+                TIFFClose(tiff);
+            }
+            else
+            {
+                exit_status = 1;
+            }
+
+            return exit_status;
+        }
+        
+        char* Process(int x, int y, int w, int h)
+        {
+            if (initialized)
+            {
+                return ::TessBaseAPI::TesseractRect(image.get_buffer(),
+                        bytes_per_pixel, bytes_per_line, x, y, w, h);
+            }
+            else
+            {
+                return NULL;
+            }
+        }
+        
+        void Stop()
+        {
+            if (initialized)
+            {
+                ::TessBaseAPI::End();
+                initialized = false;
+            }
+        }        
+    }
 }
 
-int Templar::Testing456()
-{
-    return Sax::Testing123() + 333;
-}
-
-#ifdef _CUSTOM_NULL
+#ifdef NULL_DEFINED
 #undef NULL
-#undef _CUSTOM_NULL
+#undef NULL_DEFINED
 #endif

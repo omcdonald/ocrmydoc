@@ -1,14 +1,14 @@
 /*
  * Header for template reader of OCR module.
- *
+ * 
  * Author: Milosz Kosmider
  */
 
-/*
- * The method that actually processes the region.
- */
+#ifndef SAX_HPP_INCLUDED
+#define SAX_HPP_INCLUDED
 
-namespace Sax
+namespace OCR
 {
-	int Testing123();
 }
+
+#endif

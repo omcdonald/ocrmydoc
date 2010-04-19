@@ -1,14 +1,31 @@
 /*
- * Header for library file for OCR module.
- *
+ * Header for library file of OCR module.
+ * 
  * Author: Milosz Kosmider
  */
 
-namespace Templar
+#ifndef TEMPLAR_HPP_INCLUDED
+#define TEMPLAR_HPP_INCLUDED
+
+namespace OCR
 {
-    /*
-     * The method that actually processes the region.
-     */
-    char* Process(const char* language, const unsigned char* imagedata, int bytes_per_pixel, int bytes_per_line, int width, int height);
-    int Testing456();
+    namespace Engine
+    {
+        /*
+         * Starts the engine, returning nonzero values on errors.
+         */
+        int Start(const char* image_file);
+        
+        /*
+         * Processes a region and returns the text therein.
+         */
+        char* Process(int x, int y, int w, int h);
+        
+        /*
+         * Stops the engine so that it can be restarted (or just because).
+         */
+        void Stop();
+    }
 }
+
+#endif

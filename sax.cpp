@@ -1,12 +1,11 @@
 /*
- * Header for template reader of OCR module.
- *
+ * Source for template reader of OCR module.
+ * 
  * Author: Milosz Kosmider
  */
 
 #include "sax.hpp"
 
-int Sax::Testing123()
+namespace OCR
 {
-	return 123;
 }
