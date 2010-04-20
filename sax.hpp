@@ -1,6 +1,6 @@
 /*
  * Header for template reader of OCR module.
- * 
+ *
  * Author: Milosz Kosmider
  */
 

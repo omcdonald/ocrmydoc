@@ -1,5 +1,7 @@
 *.o
 *.a
 *.bak
+*.swp
 templar
 images
+session
