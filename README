@@ -1,9 +1,7 @@
-This repository contains the devleopment files for the OCR module in the Faxmydoc project.
+This repository contains the devleopment files for the Templar module in the Faxmydoc project.
 
 Current state:
-    - Reads documents! OCRs Regions!
-    - Need to develop and implement command-line parsing scheme
-    - Need to think of template interchange format... XML? JSON? A database?
+    - Need to fill in the four stub functions with MySQL-related code.
 
 Issues:
     - None!
