@@ -1,7 +1,7 @@
 This repository contains the devleopment files for the Templar module in the Faxmydoc project.
 
 Current state:
-    - Need to implement the system for getting connection data from a file.
+    - Need to write the SQL to create the tables.
 
 Issues:
     - None!
