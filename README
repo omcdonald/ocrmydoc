@@ -1,7 +1,7 @@
 This repository contains the devleopment files for the Templar module in the Faxmydoc project.
 
 Current state:
-    - Need to fill in the four stub functions with MySQL-related code.
+    - Need to implement the system for getting connection data from a file.
 
 Issues:
     - None!

@@ -21,7 +21,8 @@ namespace Templar
          * Exit codes:
          *  0: Success!
          *  1: Failed to open image.
-         *  2: OCREngine has already been started. Call Stop first.
+         *  2: Programmer error... OCREngine has already been started. Call
+         *     Stop first.
          */
         int Start(const char* image_file);
 

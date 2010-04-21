@@ -1,33 +1,36 @@
 ## These are the configurable variables. #############################
 
-SHELL= /bin/bash
-   CC= /usr/bin/g++
-   AR= /usr/bin/ar
-FLAGS= -Wall -I./ -L./
-  BIN= templar
-  LIB= templar
+  SHELL= /bin/bash
+     CC= /usr/bin/g++
+     AR= /usr/bin/ar
+ CFLAGS= -Wall -I. -I/usr/local/include/tesseract \
+         -I/usr/include/mysql -I/usr/include/mysql++
+LDFLAGS= -L.
+    BIN= templar
+    LIB= templar
 
 ## Do not edit anything below this marker. ###########################
 
-TLIBS= -ltesseract_full -lpthread -ltiff -ljpeg -lz -lmysqlpp
+LIBS= -l$(LIB) -ltesseract_full `mysql_config --cflags` -lmysqlpp \
+      `mysql_config --libs_r` -ltiff -ljpeg -lz -lpthread
 
-$(BIN): lib$(LIB).a templar.hpp main.cpp
-	$(CC) $(FLAGS) -static main.cpp -l$(LIB) $(TLIBS) -o $(BIN)
+(BIN): lib$(LIB).a templar.hpp main.cpp
+	$(CC) $(CFLAGS) -static main.cpp $(LDFLAGS) $(LIBS) -o $(BIN)
 
 lib$(LIB).a: templar.o ocrengine.o dbaccess.o
 	$(AR) r lib$(LIB).a templar.o ocrengine.o dbaccess.o
 	rm templar.o ocrengine.o dbaccess.o
 
 templar.o: templar.hpp templar.cpp
-	$(CC) $(FLAGS) -c templar.cpp
+	$(CC) $(CFLAGS) -c templar.cpp
 
 ocrengine.o: ocrengine.hpp ocrengine.cpp
-	$(CC) $(FLAGS) -c ocrengine.cpp
+	$(CC) $(CFLAGS) -c ocrengine.cpp
 
 dbaccess.o: dbaccess.hpp dbaccess.cpp
-	$(CC) $(FLAGS) -c dbaccess.cpp
+	$(CC) $(CFLAGS) -c dbaccess.cpp
 
 reset:
 	rm -f {*.{o,a},$(BIN)}
 
-## This is here because it looks pretty. #############################
+## End makefile. #####################################################

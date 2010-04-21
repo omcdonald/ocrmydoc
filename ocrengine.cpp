@@ -4,11 +4,12 @@
  * Author: Milosz Kosmider
  */
 
+#include <cstring>
+
 #include "tesseract/baseapi.h"
 #include "tesseract/imgs.h"
 #include "tiffio.h"
 void read_tiff_image(TIFF* tif, IMAGE* image); //bug in tiffio.h?
-#include <cstring>
 
 #include "ocrengine.hpp"
 
@@ -59,14 +60,14 @@ namespace Templar {
                 }
                 else
                 {
-                    exit_status = 2;
+                    exit_status = 1;
                 }
 
                 TIFFClose(tiff);
             }
             else
             {
-                exit_status = 1;
+                exit_status = 2;
             }
 
             return exit_status;
