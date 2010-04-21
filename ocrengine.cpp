@@ -18,8 +18,10 @@ void read_tiff_image(TIFF* tif, IMAGE* image); //bug in tiffio.h?
 #define NULL_DEFINED
 #endif
 
-namespace Templar {
-    namespace OCREngine {
+namespace Templar
+{
+    namespace OCREngine
+    {
         bool initialized = false;
         unsigned char* imagedata;
         int image_width;

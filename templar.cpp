@@ -125,7 +125,7 @@ namespace Templar
         }
         else
         {
-            exit_status = 4;
+            exit_status = 5;
         }
 
         return exit_status;

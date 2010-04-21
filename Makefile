@@ -5,17 +5,17 @@
      AR= /usr/bin/ar
  CFLAGS= -Wall -I. -I/usr/local/include/tesseract \
          -I/usr/include/mysql -I/usr/include/mysql++
-LDFLAGS= -L.
+LDFLAGS= -L. -l$(LIB) -ltesseract_full -lmysqlpp \
+         `mysql_config --libs_r` -ltiff -ljpeg -lz -lpthread
+
     BIN= templar
     LIB= templar
 
 ## Do not edit anything below this marker. ###########################
 
-LIBS= -l$(LIB) -ltesseract_full `mysql_config --cflags` -lmysqlpp \
-      `mysql_config --libs_r` -ltiff -ljpeg -lz -lpthread
-
 (BIN): lib$(LIB).a templar.hpp main.cpp
-	$(CC) $(CFLAGS) -static main.cpp $(LDFLAGS) $(LIBS) -o $(BIN)
+	$(CC) $(CFLAGS) `mysql_config --cflags` -static main.cpp \
+	$(LDFLAGS) -o $(BIN)
 
 lib$(LIB).a: templar.o ocrengine.o dbaccess.o
 	$(AR) r lib$(LIB).a templar.o ocrengine.o dbaccess.o
