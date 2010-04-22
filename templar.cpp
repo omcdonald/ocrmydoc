@@ -1,4 +1,5 @@
 /* 
+<p>Find me in app/views/templates/index.html.erb</p>
  * Templar main library source.
  * 
  * Author: Milosz Kosmider
@@ -62,7 +63,7 @@ namespace Templar
         if (connected)
         {
             mysqlpp::Query tiff_path_query = conn.query();
-            tiff_path_query << "SELECT tiff_path FROM fax WHERE id = "
+            tiff_path_query << "SELECT tiff_path FROM faxes WHERE id = "
                     << mysqlpp::quote << fax_id;
             mysqlpp::StoreQueryResult tiff_path_result =
                     tiff_path_query.store();
@@ -70,11 +71,11 @@ namespace Templar
             if (tiff_path_result && tiff_path_result.num_rows() == 1)
             {
                 mysqlpp::Query regions_query = conn.query();
-                regions_query << "SELECT x, y, w, h FROM region WHERE"
+                regions_query << "SELECT name, x, y, w, h FROM regions WHERE "
                         << "template_id = " << mysqlpp::quote << template_id;
                 mysqlpp::StoreQueryResult regions_result =
                         regions_query.store();
-    
+ 
                 if (regions_result)
                 {
                     int engine_start_status = OCREngine::Start
@@ -92,12 +93,14 @@ namespace Templar
                                     regions_result[i]["h"]);
 
                             mysqlpp::Query insert_query = conn.query();
-                            insert_query << "INSERT INTO element(fax_id,"
-                                    << "element_name, contents) VALUES ("
+                            insert_query << "INSERT INTO elements(fax_id, "
+                                    << "name, contents) VALUES ("
                                     << mysqlpp::quote << fax_id << ", "
                                     << mysqlpp::quote
                                     << regions_result[i]["name"] << ", "
-                                    << mysqlpp::quote << extracted_text << ")";
+                                    << mysqlpp::quote << extracted_text << ")"
+                                    << "ON DUPLICATE KEY UPDATE contents = "
+                                    << "VALUES(contents)";
                             insert_query.execute();
  
                             delete [] extracted_text;

@@ -13,8 +13,8 @@ LDFLAGS= -L. -l$(LIB) -ltesseract_full -lmysqlpp \
 
 ## Do not edit anything below this marker. ###########################
 
-(BIN): lib$(LIB).a templar.hpp main.cpp
-	$(CC) $(CFLAGS) `mysql_config --cflags` -static main.cpp \
+(BIN): lib$(LIB).a ocrengine.hpp templar.hpp test.cpp
+	$(CC) $(CFLAGS) `mysql_config --cflags` -static test.cpp \
 	$(LDFLAGS) -o $(BIN)
 
 lib$(LIB).a: templar.o ocrengine.o dbaccess.o
